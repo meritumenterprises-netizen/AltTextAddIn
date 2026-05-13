@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Tools;
+using System;
+using System.Collections.Generic;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordAddIn1
@@ -107,6 +108,16 @@ namespace WordAddIn1
                 string altText = GetSelectedGraphicAltText(Sel);
 
                 controls[hwnd].SetAltText(altText);
+                if (!string.IsNullOrEmpty(altText) && altText != "[No graphic selected.]")
+                {
+                    //Word.Shape shape = Sel.ShapeRange[0];
+                    if (Sel.InlineShapes.Count > 0)
+                    {
+                        Word.InlineShape inlineShape =
+                            Sel.InlineShapes[1];
+                        ApplyGlow(inlineShape.Glow);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -129,6 +140,19 @@ namespace WordAddIn1
                 {
                 }
             }
+        }
+
+        private static void ApplyGlow(Word.GlowFormat glow)
+        {
+            // Green: #00B050
+            glow.Color.RGB = 0x00B050;
+
+            // Size: 5 pt
+            glow.Radius = 5f;
+
+            // Transparency: 60%
+            // Word interop uses 0.0 = opaque, 1.0 = fully transparent
+            glow.Transparency = 0.60f;
         }
 
         private string GetSelectedGraphicAltText(Word.Selection selection)
