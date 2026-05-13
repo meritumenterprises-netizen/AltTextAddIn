@@ -13,8 +13,11 @@ namespace WordAddIn1
 	public partial class AltTextPaneControl : UserControl
 	{
 		private TextBox txtAltText;
+        private bool _updatingFromWord;
 
-		public AltTextPaneControl()
+        public event EventHandler<string> AltTextChangedByUser;
+
+        public AltTextPaneControl()
 		{
 			InitializeComponent();
 			BuildUi();
@@ -25,30 +28,63 @@ namespace WordAddIn1
 			txtAltText = new TextBox
 			{
 				Multiline = true,
-				ReadOnly = true,
+				ReadOnly = false,
 				ScrollBars = ScrollBars.Vertical,
 				WordWrap = true,
 				Dock = DockStyle.Fill,
 				Font = new Font("Segoe UI", 12),
 			};
 
-			Controls.Add(txtAltText);
+            txtAltText.TextChanged += TxtAltText_TextChanged;
+
+            Controls.Add(txtAltText);
 		}
 
-		public void SetAltText(string altText)
+        private void TxtAltText_TextChanged(object sender, EventArgs e)
+        {
+            if (_updatingFromWord)
+                return;
+
+            AltTextChangedByUser?.Invoke(this, txtAltText.Text);
+        }
+
+        public void SetAltText(string altText)
 		{
-			if (string.IsNullOrWhiteSpace(altText))
-			{
-				txtAltText.Text = "[Selected graphic has no Alt Text.]";
-			}
-			else
-			{
-				altText = altText.Replace("\\n", Environment.NewLine);
-				altText = altText.Replace("\r\n", Environment.NewLine);
-				altText = altText.Replace("\n", Environment.NewLine);
+            _updatingFromWord = true;
 
-				txtAltText.Text = altText;
-			}
-		}
-	}
+            try
+            {
+                if (string.IsNullOrWhiteSpace(altText))
+                {
+                    txtAltText.Text = "";
+                }
+                else
+                {
+                    altText = altText.Replace("\\n", Environment.NewLine);
+                    altText = altText.Replace("\r\n", Environment.NewLine);
+                    altText = altText.Replace("\n", Environment.NewLine);
+
+                    txtAltText.Text = altText;
+                }
+            }
+            finally
+            {
+                _updatingFromWord = false;
+            }
+        }
+
+        public void SetPlaceholder()
+        {
+            _updatingFromWord = true;
+
+            try
+            {
+                txtAltText.Text = "[No graphic selected.]";
+            }
+            finally
+            {
+                _updatingFromWord = false;
+            }
+        }
+    }
 }

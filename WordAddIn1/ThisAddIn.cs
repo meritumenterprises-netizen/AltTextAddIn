@@ -41,6 +41,8 @@ namespace WordAddIn1
 
             var control = new AltTextPaneControl();
 
+            control.AltTextChangedByUser += Control_AltTextChangedByUser;
+
             var pane = this.CustomTaskPanes.Add(
                 control,
                 "Selected Graphic Alt Text",
@@ -51,6 +53,41 @@ namespace WordAddIn1
 
             panes[hwnd] = pane;
             controls[hwnd] = control;
+        }
+
+        private void Control_AltTextChangedByUser(object sender, string newAltText)
+        {
+            try
+            {
+                Word.Selection selection = this.Application.Selection;
+
+                if (selection == null)
+                    return;
+
+                if (selection.InlineShapes.Count > 0)
+                {
+                    Word.InlineShape inlineShape = selection.InlineShapes[1];
+                    inlineShape.AlternativeText = newAltText;
+                    return;
+                }
+
+                try
+                {
+                    if (selection.ShapeRange != null && selection.ShapeRange.Count > 0)
+                    {
+                        Word.Shape shape = selection.ShapeRange[1];
+                        shape.AlternativeText = newAltText;
+                    }
+                }
+                catch
+                {
+                    // ShapeRange throws if selection is not a floating shape.
+                }
+            }
+            catch
+            {
+                // Optional: log error here.
+            }
         }
 
         private void Application_WindowSelectionChange(Word.Selection Sel)
