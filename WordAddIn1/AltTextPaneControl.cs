@@ -37,7 +37,7 @@ namespace WordAddIn1
 
             txtAltText.TextChanged += TxtAltText_TextChanged;
 
-            Controls.Add(txtAltText);
+            splitContainer1.Panel1.Controls.Add(txtAltText);
 		}
 
         private void TxtAltText_TextChanged(object sender, EventArgs e)
@@ -57,6 +57,7 @@ namespace WordAddIn1
                 if (string.IsNullOrWhiteSpace(altText))
                 {
                     txtAltText.Text = "";
+                    webBrowser1.DocumentText = "";
                 }
                 else
                 {
@@ -65,6 +66,7 @@ namespace WordAddIn1
                     altText = altText.Replace("\n", Environment.NewLine);
 
                     txtAltText.Text = altText;
+                    webBrowser1.DocumentText = txtAltText.Text;
                 }
             }
             finally
@@ -80,6 +82,7 @@ namespace WordAddIn1
             try
             {
                 txtAltText.Text = "[No graphic selected.]";
+                webBrowser1.DocumentText = "";
             }
             finally
             {

@@ -2,6 +2,7 @@
 using Microsoft.Office.Tools;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace WordAddIn1
@@ -69,6 +70,22 @@ namespace WordAddIn1
                 {
                     Word.InlineShape inlineShape = selection.InlineShapes[1];
                     inlineShape.AlternativeText = newAltText;
+                    (sender as AltTextPaneControl).webBrowser1.DocumentText = @"
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <style>
+                                body {
+                                    font-family: 'Segoe UI';
+                                    font-size: 12pt;
+                                    margin: 8px;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                        " + newAltText + @"
+                        </body>
+                        </html>"; 
                     return;
                 }
 
