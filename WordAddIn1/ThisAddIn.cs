@@ -80,10 +80,22 @@ namespace WordAddIn1
                                     font-size: 12pt;
                                     margin: 8px;
                                 }
+                                .green {
+                                    color: #00B050;
+                                    font-weight: bold;
+                                }
+                                .red {
+                                    color: red;
+                                    font-weight: normal;
+                                }
+                                .yellow {
+                                    background-color: #FFC000;
+                                    font-weight: normal;
+                                }
                             </style>
                         </head>
                         <body>
-                        " + newAltText + @"
+                        " + newAltText.Replace(Environment.NewLine.ToString(), "<br/>") + @"
                         </body>
                         </html>"; 
                     return;
