@@ -70,34 +70,7 @@ namespace WordAddIn1
                 {
                     Word.InlineShape inlineShape = selection.InlineShapes[1];
                     inlineShape.AlternativeText = newAltText;
-                    (sender as AltTextPaneControl).webBrowser1.DocumentText = @"
-                        <!DOCTYPE html>
-                        <html>
-                        <head>
-                            <style>
-                                body {
-                                    font-family: 'Segoe UI';
-                                    font-size: 12pt;
-                                    margin: 8px;
-                                }
-                                .green {
-                                    color: #00B050;
-                                    font-weight: bold;
-                                }
-                                .red {
-                                    color: red;
-                                    font-weight: normal;
-                                }
-                                .yellow {
-                                    background-color: #FFC000;
-                                    font-weight: normal;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                        " + newAltText.Replace(Environment.NewLine.ToString(), "<br/>") + @"
-                        </body>
-                        </html>"; 
+                    WebBrowserUtils.SetText((sender as AltTextPaneControl).webBrowser1, newAltText);
                     return;
                 }
 

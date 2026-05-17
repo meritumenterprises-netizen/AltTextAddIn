@@ -66,34 +66,7 @@ namespace WordAddIn1
                     altText = altText.Replace("\n", Environment.NewLine);
 
                     txtAltText.Text = altText;
-                    webBrowser1.DocumentText = @"
-                        <!DOCTYPE html>
-                        <html>
-                        <head>
-                            <style>
-                                body {
-                                    font-family: 'Segoe UI';
-                                    font-size: 12pt;
-                                    margin: 8px;
-                                }
-                                .green {
-                                    color: #00B050;
-                                    font-weight: bold;
-                                }
-                                .red {
-                                    color: red;
-                                    font-weight: normal;
-                                }
-                                .yellow {
-                                    background-color: #FFC000;
-                                    font-weight: normal;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                        " + txtAltText.Text.Replace(Environment.NewLine.ToString(),"<br/>") + @"
-                        </body>
-                        </html>";
+                    WebBrowserUtils.SetText(webBrowser1, txtAltText.Text);
                 }
             }
             finally
