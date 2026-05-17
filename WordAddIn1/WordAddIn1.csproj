@@ -191,12 +191,22 @@
     <Compile Include="AltTextPaneControl.Designer.cs">
       <DependentUpon>AltTextPaneControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="AltTextRibbon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AltTextRibbon.Designer.cs">
+      <DependentUpon>AltTextRibbon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PreferenceStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="WebBrowserUtils.cs" />
     <EmbeddedResource Include="AltTextPaneControl.resx">
       <DependentUpon>AltTextPaneControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AltTextRibbon.resx">
+      <DependentUpon>AltTextRibbon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -206,6 +216,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -227,6 +238,13 @@
     <AppDesigner Include="Properties\" />
     <None Include="WordAddIn1_TemporaryKey.pfx" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DockPanelElement_10705_24.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="VSProject_genericproject.ico" />
+    <Content Include="x-office-spreadsheet_35982.ico" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -240,6 +258,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>C74E862CEF640D5D606A3D217962555DCD264DC8</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>x-office-spreadsheet_35982.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- Include additional build rules for an Office application add-in. -->

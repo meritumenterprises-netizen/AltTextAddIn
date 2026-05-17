@@ -9,7 +9,7 @@ namespace WordAddIn1
 {
     public partial class ThisAddIn
     {
-        private Dictionary<int, CustomTaskPane> panes =
+        public Dictionary<int, CustomTaskPane> panes =
             new Dictionary<int, CustomTaskPane>();
 
         private Dictionary<int, AltTextPaneControl> controls =
@@ -50,11 +50,21 @@ namespace WordAddIn1
                 "Selected Graphic Alt Text",
                 window);
 
-            pane.Visible = true;
+            if (PreferenceStore.GetDisplayOnStartup())
+            {
+                Globals.Ribbons.AltTextRibbon.checkBoxDisplayOnStartup.Checked = true;
+                pane.Visible = true;
+            }
+            else
+            {
+                Globals.Ribbons.AltTextRibbon.checkBoxDisplayOnStartup.Checked = false;
+                pane.Visible = false;
+            }
             pane.Width = 400;
 
             panes[hwnd] = pane;
             controls[hwnd] = control;
+            
         }
 
         private void Control_AltTextChangedByUser(object sender, string newAltText)

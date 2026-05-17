@@ -16,6 +16,7 @@ namespace WordAddIn1
         private bool _updatingFromWord;
 
         public event EventHandler<string> AltTextChangedByUser;
+        public event EventHandler<string> TaskPaneVisibleChanged;
 
         public AltTextPaneControl()
 		{
